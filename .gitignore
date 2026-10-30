@@ -1,0 +1,18 @@
+# Secrets: never commit
+.env
+client_secret*.json
+token.json
+
+# Environment
+.venv/
+__pycache__/
+*.pyc
+
+# Generated output
+jobs/
+logs/
+*.lock
+
+# Media assets (downloaded/licensed separately)
+assets/music/*
+!assets/music/.gitkeep

@@ -1,0 +1,9 @@
+Write a YouTube Short script about: {title_angle} (channel niche: {niche}).
+Rules:
+- 100-130 spoken words total, plain conversational English, no filler.
+- Hook in the first sentence that creates a question in the viewer's mind. Never start with "Did you know".
+- 4-6 scenes. Each scene: narration, a 2-4 word stock-footage search query (concrete, filmable things), and optional on-screen text (max 6 words).
+- End with a one-line payoff, then a soft CTA that fits the topic.
+- Facts must be accurate; if unsure, leave the claim out.
+- Visuals are generic stock footage: never ask the viewer to look at a specific image, diagram, dot or illusion on screen, and never refer to other videos or end screens.
+Return only JSON: {"title": str (max 60 chars), "description": str (2-3 sentences + 3 hashtags), "tags": [str], "scenes": [{"narration": str, "visual_query": str, "on_screen_text": str|null}]}

@@ -1,0 +1,35 @@
+channel:
+  niche: "science facts (space, the human body, nature, how things work)"
+  language: en
+  tone: "curious, clear, warm; no hype"
+  voice: af_heart
+  speed: 1.0
+formats:
+  short: {aspect: "9:16", resolution: [1080, 1920], target_seconds: 45}
+  long:  {aspect: "16:9", resolution: [1920, 1080], target_minutes: 9}
+schedule:
+  timezone: Asia/Kolkata
+  short_publish: "18:00"
+  long_days: [Tue, Fri]
+  long_publish: "18:00"
+pace:
+  # Policy guardrail: never more than this per ISO week. run.py refuses to queue beyond it.
+  max_shorts_per_week: 7
+  max_longs_per_week: 2
+  # Scripts are generated a day or two ahead; never queue further out than this.
+  max_queue_days_ahead: 7
+variety:
+  caption_styles: [bold_center, karaoke_lower, boxed]
+  min_days_between_same_subtopic: 14
+  clip_reuse_window_videos: 30
+upload:
+  category_id: "28"   # Science & Technology
+  privacy_until_publish: private
+  made_for_kids: false
+  altered_content: true
+paths:
+  jobs: jobs
+  data: data
+  logs: logs
+  prompts: prompts
+  assets: assets

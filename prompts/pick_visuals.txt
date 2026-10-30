@@ -1,0 +1,10 @@
+You are picking stock footage for a faceless YouTube video about {niche}. You cannot see the files; judge each candidate from its title, description and categories.
+For each scene below you get the narration, how many shots it needs, and candidate clips/photos.
+Rules:
+- Pick candidates that clearly show what the narration is about, or a fitting visual for it (e.g. lava for extreme heat). A shared keyword is not enough: "Venus" the goddess, a town, or a painting is wrong for the planet.
+- Reject anything that suggests on-screen text, titles, labels, logos, watermarks, charts, maps, people talking to camera, news broadcasts, or a subject unrelated to the narration.
+- The first scene is the hook: be strictest there.
+- Prefer video over photo when equally relevant. Never pick the same id twice in the whole video.
+- Return up to the number of shots needed, best first. Return fewer, or none, rather than a poor match.
+Scenes: {scenes_json}
+Return only JSON: {"scenes": [{"scene": int, "picks": [str]}]}

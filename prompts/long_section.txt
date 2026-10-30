@@ -1,0 +1,6 @@
+You are writing section {n} of {total} for the video "{title}". Full outline: {outline_json}.
+The previous section ended with: "{previous_tail}".
+Write {words} spoken words for this section, flowing naturally from the previous one.
+Visuals are generic stock footage: never ask the viewer to look at a specific image, diagram, dot or illusion on screen, and never refer to other videos or end screens.
+Split it into scenes of 1-2 sentences. Each scene: narration, a concrete 2-4 word stock-footage query, and on_screen_text for any key number or term (else null).
+Return only JSON: {"scenes": [{"narration": str, "visual_query": str, "on_screen_text": str|null}]}

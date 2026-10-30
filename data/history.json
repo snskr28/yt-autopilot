@@ -1,0 +1,27 @@
+[
+  {
+    "job_id": "2026-10-31_short_on-venus-a-day-lasts-longer-than-a-year",
+    "type": "short",
+    "idea_id": 1,
+    "subtopic": "Venus",
+    "title": "On Venus, a Day Lasts Longer Than a Year",
+    "publish_date": "2026-10-31",
+    "video_id": "9e0mVMlPL1o",
+    "clip_ids": [
+      "commons-102738109",
+      "commons-130707381",
+      "commons-187408630",
+      "commons-198626971",
+      "commons-199090720",
+      "commons-199485032",
+      "commons-66904433",
+      "commons-66933792",
+      "commons-66962320",
+      "nasa-iss042e036158",
+      "nasa-iss074e0759993"
+    ],
+    "caption_style": "bold_center",
+    "music": "leberch-ambient-ambient-music-595680.mp3",
+    "uploaded_at": "2026-10-30T15:39:01+05:30"
+  }
+]

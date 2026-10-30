@@ -1,0 +1,9 @@
+You are the content strategist for a faceless YouTube channel about {niche}.
+Audience: curious adults, English, global. Tone: {tone}.
+Generate 20 video ideas: 14 for Shorts (one surprising fact or idea, explainable in 45 seconds) and 6 for long videos (8-10 minutes, enough depth for 5-7 sections).
+Avoid anything close to these past titles: {recent_titles}.
+Each subtopic must be narrow: one specific object, creature, phenomenon or body part (for example "Venus", "octopus", "lightning", "stomach lining"), never a broad field like "astronomy" or "human anatomy".
+Mix subtopics; no more than 3 ideas from the same subtopic.
+Do not use these subtopics, they were covered recently: {blocked_subtopics}.
+Every claim must be verifiable and non-controversial; no medical, legal or financial advice.
+Return only JSON: [{"type": "short"|"long", "subtopic": str, "title_angle": str, "why_interesting": str}]

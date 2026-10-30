@@ -1,0 +1,5 @@
+Plan an 8-10 minute YouTube video about: {title_angle} (niche: {niche}).
+Give: a 20-second cold-open hook, 5-7 sections each with a heading and 3-4 key points, and a 30-second outro.
+The video must teach something specific and build to a clear payoff; no padding.
+Visuals are generic stock footage, so plan nothing that depends on showing a specific image, diagram or on-screen demo.
+Return only JSON: {"hook": str, "sections": [{"heading": str, "points": [str]}], "outro": str}

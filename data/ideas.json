@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "type": "short",
+    "subtopic": "Venus",
+    "title_angle": "On Venus, one spin takes longer than one trip around the Sun",
+    "why_interesting": "Venus takes about 243 Earth days to rotate once but only about 225 days to orbit the Sun. It also spins backwards compared with most planets, so the Sun rises in the west.",
+    "status": "published",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": "2026-10-31_short_on-venus-a-day-lasts-longer-than-a-year"
+  },
+  {
+    "id": 2,
+    "type": "short",
+    "subtopic": "neutron star",
+    "title_angle": "A teaspoon of neutron star would weigh about as much as a mountain",
+    "why_interesting": "Neutron stars pack more mass than the Sun into a ball about 20 km across. A teaspoon of their material would weigh roughly a billion tonnes on Earth, which makes extreme density easy to picture.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 3,
+    "type": "short",
+    "subtopic": "octopus",
+    "title_angle": "Why an octopus has three hearts and blue blood",
+    "why_interesting": "Two hearts pump blood through the gills and one pumps it to the body. The blood is blue because it carries oxygen with copper-based hemocyanin instead of iron-based hemoglobin.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 4,
+    "type": "short",
+    "subtopic": "banana",
+    "title_angle": "Bananas are naturally (and harmlessly) radioactive",
+    "why_interesting": "Bananas contain potassium, and a tiny fraction of natural potassium is radioactive potassium-40. The dose is far too small to matter, which makes it a calm way to explain that radioactivity is a normal part of the world.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 5,
+    "type": "short",
+    "subtopic": "stomach lining",
+    "title_angle": "The cells lining your stomach are replaced every few days",
+    "why_interesting": "The surface cells of the stomach lining live in a harsh, acidic environment and are renewed within days. This shows how the body constantly rebuilds itself.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 6,
+    "type": "short",
+    "subtopic": "Pando aspen grove",
+    "title_angle": "This 'forest' in Utah is actually one single tree",
+    "why_interesting": "Pando is a grove of tens of thousands of quaking aspen stems that share one root system and identical DNA. It is one of the heaviest known living organisms, at an estimated 6,000 tonnes.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 7,
+    "type": "short",
+    "subtopic": "honey",
+    "title_angle": "Why honey can stay edible for thousands of years",
+    "why_interesting": "Honey has very little free water, is acidic, and contains small amounts of hydrogen peroxide, so microbes struggle to grow in it. Archaeologists have found honey in ancient Egyptian tombs that had not spoiled.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 8,
+    "type": "short",
+    "subtopic": "spinal discs",
+    "title_angle": "You're slightly taller in the morning than at night",
+    "why_interesting": "During the day, gravity squeezes fluid out of the discs between your vertebrae, and you can lose around a centimetre of height. Lying down overnight lets the discs recover.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 9,
+    "type": "short",
+    "subtopic": "lightning",
+    "title_angle": "A lightning bolt is hotter than the surface of the Sun",
+    "why_interesting": "A lightning channel can briefly reach about 30,000 °C, roughly five times hotter than the Sun's surface. That sudden heating makes the air expand explosively, and the expanding air is the thunder you hear.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 10,
+    "type": "short",
+    "subtopic": "Rayleigh scattering",
+    "title_angle": "The same physics makes the sky blue and sunsets red",
+    "why_interesting": "Air molecules scatter short blue wavelengths much more than red ones, which is called Rayleigh scattering. At sunset, light travels through more atmosphere, so most of the blue is scattered away before it reaches you.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 11,
+    "type": "short",
+    "subtopic": "stained glass window",
+    "title_angle": "Old church windows aren't thicker at the bottom because glass flows",
+    "why_interesting": "This is a popular myth worth correcting. At room temperature, glass would take far longer than the age of the universe to flow noticeably. The uneven panes come from how old glass was made and how glaziers installed it.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 12,
+    "type": "short",
+    "subtopic": "tardigrade",
+    "title_angle": "The tiny animal that survived the vacuum of space",
+    "why_interesting": "In 2007, tardigrades were exposed to open space on the FOTON-M3 mission, and some survived and later reproduced. They manage this by drying out into a dormant state called a tun.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 13,
+    "type": "short",
+    "subtopic": "Earth's rotation",
+    "title_angle": "Days were shorter when dinosaurs were alive",
+    "why_interesting": "The Moon's tides slowly act as a brake on Earth's spin. Growth rings in fossil shells suggest a day lasted about 23.5 hours around 70 million years ago, which is time recorded in biology.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 14,
+    "type": "short",
+    "subtopic": "GPS satellite",
+    "title_angle": "Your phone's GPS only works because Einstein was right",
+    "why_interesting": "Clocks on GPS satellites run fast by about 38 microseconds per day compared with clocks on the ground, because of both special and general relativity. Without that correction, position errors would build up by kilometres each day.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 15,
+    "type": "long",
+    "subtopic": "human eye",
+    "title_angle": "How your eyes and brain build the world you see",
+    "why_interesting": "This has natural sections: how light enters the eye, rods and cones, the blind spot and how the brain fills it in, saccades and how the brain hides the blur while your eyes jump, colour perception, and optical illusions as clues to how the brain processes images.",
+    "status": "scripted",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": "2026-11-03_long_your-eyes-lie-to-you-how-your-brain-buil"
+  },
+  {
+    "id": 16,
+    "type": "long",
+    "subtopic": "star",
+    "title_angle": "The life of a star, from a cold gas cloud to a black hole",
+    "why_interesting": "The video can follow one clear timeline: nebula collapse, ignition of fusion, the main sequence, red giants, and the forks that lead to white dwarfs, supernovae, neutron stars or black holes. It ends with how elements made in stars ended up in us.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 17,
+    "type": "long",
+    "subtopic": "airplane wing",
+    "title_angle": "How a 400-tonne airplane actually stays in the air",
+    "why_interesting": "Lift is widely misunderstood, so the video can correct the 'equal transit time' myth. Sections could cover pressure and airflow turning, the four forces, wing shape and angle of attack, flaps and control surfaces, and why planes cruise high.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 18,
+    "type": "long",
+    "subtopic": "lungs",
+    "title_angle": "The journey of a single breath through your body",
+    "why_interesting": "The video can follow the air from nose to alveoli, then oxygen into red blood cells and out to the cells' mitochondria, and finally carbon dioxide's trip back out. It's one story that ties together several body systems.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 19,
+    "type": "long",
+    "subtopic": "tectonic plates",
+    "title_angle": "How moving plates built mountains, oceans and continents",
+    "why_interesting": "This covers the story of how continental drift went from rejected idea to accepted theory, the evidence from seafloor spreading, the three kinds of plate boundaries, the Himalayas as an example of a collision, and supercontinents like Pangaea.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 20,
+    "type": "long",
+    "subtopic": "thermohaline circulation",
+    "title_angle": "The slow ocean conveyor belt that moves heat around the planet",
+    "why_interesting": "This explains thermohaline circulation in clear steps: how wind-driven surface currents work, how differences in water density sink water near the poles, how long it takes water to complete the loop, how the circulation affects regional climates, and how scientists track it.",
+    "status": "new",
+    "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  }
+]

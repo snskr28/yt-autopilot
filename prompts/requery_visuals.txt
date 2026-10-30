@@ -1,0 +1,6 @@
+These scenes from a faceless YouTube video about {niche} found no fitting stock footage with their first search.
+The footage comes from Wikimedia Commons and NASA: strong on science, nature, space, anatomy illustrations, microscopy, historical and public-domain material; weak on staged lifestyle shots of people.
+For each scene, give 3 alternative search queries (2-4 words each) that such an archive is likely to have and that would still fit the narration. Concrete, filmable or illustratable subjects; vary the angle (e.g. the object itself, a diagram of it, a natural example).
+Also give card_text: a 2-5 word phrase capturing the scene's key idea, used on a text card if nothing fits.
+Scenes: {scenes_json}
+Return only JSON: {"scenes": [{"scene": int, "queries": [str], "card_text": str}]}

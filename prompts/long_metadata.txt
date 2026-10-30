@@ -1,0 +1,2 @@
+For the finished video "{working_title}" with sections {headings_with_timestamps}:
+Return only JSON: {"title": str (max 70 chars, curiosity without clickbait lies), "description": str (3-sentence summary, then chapter list using the given timestamps), "tags": [str] (10-15), "thumbnail_text": str (3-5 words)}
