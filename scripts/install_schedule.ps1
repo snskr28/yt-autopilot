@@ -1,18 +1,20 @@
 # Registers the yt-autopilot tasks in Windows Task Scheduler (folder \yt-autopilot\).
 # Runs as the current user, only while logged on (Claude Code and the YouTube token live in this profile).
 #
-# Missed runs: Windows' StartWhenAvailable proved unreliable after sleep, so every task also
-# fires a few minutes after sign-in and after unlocking (waking from sleep). That is safe
-# because `generate --ensure` only writes a script when the next slot is due and has none, and
-# `produce` only works on approved jobs that aren't uploaded yet. Times are staggered so two
-# tasks don't hit the run lock together.
+#   tick          every 30 minutes, and 3 minutes after sign-in or unlock (waking from sleep):
+#                 writes any script due tomorrow (generate --ensure), then makes and uploads
+#                 whatever is approved (produce). Cheap when nothing is due, so missed times
+#                 simply catch up on the next tick.
+#   weekly-stats  Sunday 20:00
+#
+# Runs are launched hidden (task-hidden.vbs), so no console window flashes.
 #
 #   powershell -ExecutionPolicy Bypass -File scripts\install_schedule.ps1            # install / update
 #   powershell -ExecutionPolicy Bypass -File scripts\install_schedule.ps1 -Remove    # remove all
 param([switch]$Remove)
 
 $folder = '\yt-autopilot\'
-$cmd = Join-Path $PSScriptRoot 'task.cmd'
+$launcher = Join-Path $PSScriptRoot 'task-hidden.vbs'
 $project = Split-Path $PSScriptRoot -Parent
 
 if ($Remove) {
@@ -25,7 +27,12 @@ $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopIfGoingOnB
     -ExecutionTimeLimit (New-TimeSpan -Hours 4) -MultipleInstances IgnoreNew
 $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
-function Daily([string]$at) { New-ScheduledTaskTrigger -Daily -At $at }
+function Every30Minutes {
+    $t = New-ScheduledTaskTrigger -Daily -At '00:00'
+    $t.Repetition = (New-ScheduledTaskTrigger -Once -At '00:00' -RepetitionInterval (New-TimeSpan -Minutes 30) `
+        -RepetitionDuration (New-TimeSpan -Days 1)).Repetition
+    $t
+}
 
 function AtLogon([string]$delay) {
     $t = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
@@ -45,26 +52,23 @@ function AtUnlock([string]$delay) {
 }
 
 $tasks = @(
-    @{ Name = 'generate-short'; Args = 'generate --type short --ensure'
-       Triggers = @((Daily '09:00'), (Daily '13:00'), (AtLogon 'PT3M'), (AtUnlock 'PT3M')) },
-    @{ Name = 'generate-long';  Args = 'generate --type long --ensure'
-       Triggers = @((Daily '09:20'), (Daily '13:20'), (AtLogon 'PT10M'), (AtUnlock 'PT10M')) },
-    @{ Name = 'produce';        Args = 'produce'
-       Triggers = @((Daily '14:00'), (Daily '21:00'), (AtLogon 'PT25M'), (AtUnlock 'PT25M')) },
-    @{ Name = 'weekly-stats';   Args = 'stats'
+    @{ Name = 'tick';         Args = 'tick'
+       Triggers = @((Every30Minutes), (AtLogon 'PT3M'), (AtUnlock 'PT3M')) },
+    @{ Name = 'weekly-stats'; Args = 'stats'
        Triggers = @(New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At '20:00') }
 )
 
-# tasks from the first version of this script
-foreach ($old in 'produce-1400', 'produce-2100') {
+# tasks from earlier versions of this script
+foreach ($old in 'produce-1400', 'produce-2100', 'produce', 'generate-short', 'generate-long') {
     Unregister-ScheduledTask -TaskPath $folder -TaskName $old -Confirm:$false -ErrorAction SilentlyContinue
 }
 
 foreach ($t in $tasks) {
-    $action = New-ScheduledTaskAction -Execute $cmd -Argument $t.Args -WorkingDirectory $project
+    $action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument ('"{0}" {1}' -f $launcher, $t.Args) `
+        -WorkingDirectory $project
     Register-ScheduledTask -TaskPath $folder -TaskName $t.Name -Action $action -Trigger $t.Triggers `
         -Settings $settings -Principal $principal -Force | Out-Null
-    Write-Output ("Registered {0,-15} -> task.cmd {1}  ({2} triggers)" -f $t.Name, $t.Args, $t.Triggers.Count)
+    Write-Output ("Registered {0,-13} -> {1}  ({2} triggers)" -f $t.Name, $t.Args, $t.Triggers.Count)
 }
 Get-ScheduledTask -TaskPath $folder | Get-ScheduledTaskInfo |
     Select-Object TaskName, NextRunTime | Format-Table -AutoSize

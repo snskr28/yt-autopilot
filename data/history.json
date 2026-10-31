@@ -142,5 +142,31 @@
     "caption_style": "karaoke_lower",
     "music": "atlasaudio-space-space-music-587610.mp3",
     "uploaded_at": "2026-10-30T21:01:05+05:30"
+  },
+  {
+    "job_id": "2026-11-01_short_a-teaspoon-of-this-weighs-as-much-as-a-m",
+    "type": "short",
+    "idea_id": 2,
+    "subtopic": "neutron star",
+    "title": "A Teaspoon of This Weighs as Much as a Mountain",
+    "publish_date": "2026-11-01",
+    "video_id": "44Eh2wIyUjQ",
+    "clip_ids": [
+      "commons-115344735",
+      "commons-155081312",
+      "commons-17279544",
+      "commons-192540524",
+      "commons-201167526",
+      "commons-39141193",
+      "commons-40730093",
+      "commons-47698704",
+      "commons-61090124",
+      "commons-77411833",
+      "nasa-iss074e0531901"
+    ],
+    "thumb_layout": null,
+    "caption_style": "boxed",
+    "music": "alex-morgan-optimistic-pleasant-light-music-583266.mp3",
+    "uploaded_at": "2026-10-31T10:42:23+05:30"
   }
 ]

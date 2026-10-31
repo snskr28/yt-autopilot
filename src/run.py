@@ -13,6 +13,9 @@
       and the run moves on; it is retried on later runs up to MAX_ATTEMPTS.
   python -m src.run stats
       Writes the weekly summary to logs/weekly_<year>-W<week>.md.
+  python -m src.run tick
+      generate --ensure for Shorts and long videos, then produce: what Task
+      Scheduler runs every 30 minutes and after sign-in or wake.
 
 Every command takes a lock (logs/run.lock), so two runs never overlap.
 """
@@ -232,6 +235,14 @@ def produce(upload_enabled: bool = True) -> int:
     return 1 if failures else 0
 
 
+def tick() -> int:
+    """The scheduler's one recurring job: write any script due tomorrow, then make and upload
+    whatever is approved. Cheap when nothing is due (no Claude call, no rendering), so it runs
+    every 30 minutes; one process and one lock means the steps never trip over each other."""
+    codes = [generate("short", ensure=True), generate("long", ensure=True), produce()]
+    return max(codes)
+
+
 # ---------- main ----------
 
 def main() -> int:
@@ -244,6 +255,7 @@ def main() -> int:
     prod = sub.add_parser("produce", help="produce and upload every approved job")
     prod.add_argument("--no-upload", action="store_true", help="stop before uploading (testing)")
     sub.add_parser("stats", help="write the weekly summary")
+    sub.add_parser("tick", help="generate --ensure for both types, then produce (what the scheduler runs)")
     args = parser.parse_args()
     try:
         with run_lock():
@@ -252,6 +264,8 @@ def main() -> int:
                 return generate(args.type, ensure=args.ensure)
             if args.command == "produce":
                 return produce(upload_enabled=not args.no_upload)
+            if args.command == "tick":
+                return tick()
             if args.command == "stats":
                 from .stats import weekly_summary
                 path = weekly_summary()
