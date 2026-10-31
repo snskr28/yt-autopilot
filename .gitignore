@@ -16,3 +16,6 @@ logs/
 # Media assets (downloaded/licensed separately)
 assets/music/*
 !assets/music/.gitkeep
+
+# Design review captures (regenerated on demand)
+.impeccable/review/

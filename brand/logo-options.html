@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Second Look logo options</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  body { width: 3200px; height: 800px; overflow: hidden; display: flex; }
+  svg { display: block; flex: none; }
+</style>
+</head>
+<body>
+<!-- Four symmetric concepts, each 800×800 on cloth navy; red is used once per mark. -->
+
+<!-- A · Moon eye: two crescents, waning and waxing, face a red full moon. ( ● ) -->
+<svg width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Option A: moon eye">
+  <defs>
+    <mask id="a-left"><rect width="800" height="800" fill="#fff"/><circle cx="455" cy="400" r="232" fill="#000"/></mask>
+    <mask id="a-right"><rect width="800" height="800" fill="#fff"/><circle cx="345" cy="400" r="232" fill="#000"/></mask>
+  </defs>
+  <rect width="800" height="800" fill="var(--cloth)"/>
+  <circle cx="400" cy="400" r="232" fill="var(--page)" mask="url(#a-left)"/>
+  <circle cx="400" cy="400" r="232" fill="var(--page)" mask="url(#a-right)"/>
+  <circle cx="400" cy="400" r="104" fill="var(--rubric)"/>
+</svg>
+
+<!-- B · Lid and moon: an eye whose lids are crescents and whose iris is the full moon. -->
+<svg width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Option B: eye with a moon for an iris">
+  <defs>
+    <mask id="b-lids">
+      <rect width="800" height="800" fill="#000"/>
+      <path d="M 118 400 C 230 205, 570 205, 682 400 C 570 595, 230 595, 118 400 Z" fill="#fff"/>
+      <path d="M 186 400 C 280 268, 520 268, 614 400 C 520 532, 280 532, 186 400 Z" fill="#000"/>
+    </mask>
+  </defs>
+  <rect width="800" height="800" fill="var(--cloth)"/>
+  <rect width="800" height="800" fill="var(--page)" mask="url(#b-lids)"/>
+  <circle cx="400" cy="400" r="98" fill="var(--rubric)"/>
+</svg>
+
+<!-- C · Two looks: two rings overlap; only what both see, the lens between them, is red. -->
+<svg width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Option C: two overlapping rings with a red lens">
+  <defs>
+    <clipPath id="c-left"><circle cx="318" cy="400" r="186"/></clipPath>
+  </defs>
+  <rect width="800" height="800" fill="var(--cloth)"/>
+  <circle cx="482" cy="400" r="186" fill="var(--rubric)" clip-path="url(#c-left)"/>
+  <circle cx="318" cy="400" r="168" fill="none" stroke="var(--page)" stroke-width="36"/>
+  <circle cx="482" cy="400" r="168" fill="none" stroke="var(--page)" stroke-width="36"/>
+</svg>
+
+<!-- D · Waxing to full: a half moon above, its full moon below, the second one red. -->
+<svg width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Option D: a white half moon over a red full moon">
+  <defs>
+    <mask id="d-top"><rect width="800" height="800" fill="#fff"/><circle cx="400" cy="462" r="142" fill="#000"/></mask>
+  </defs>
+  <rect width="800" height="800" fill="var(--cloth)"/>
+  <circle cx="400" cy="462" r="128" fill="var(--rubric)"/>
+  <circle cx="400" cy="300" r="128" fill="var(--page)" mask="url(#d-top)"/>
+</svg>
+</body>
+</html>

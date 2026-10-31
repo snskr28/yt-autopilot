@@ -1,0 +1,20 @@
+﻿@font-face {
+  font-family: "Archivo";
+  src: url("Archivo-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+}
+
+:root {
+  /* the almanac's materials: navy book cloth, page white, rubric red (reserved for the second look) */
+  --cloth: #13203a;
+  --cloth-lift: #2a3f68;   /* unlit side of a moon disc: one tone step, not a line; survives at phone size */
+  --page: #eef1f5;
+  --rubric: #e0402f;
+  --ink-soft: #aab7cd;     /* secondary text tinted from the cloth, not grey */
+}
+
+html, body {
+  margin: 0;
+  background: var(--cloth);
+}

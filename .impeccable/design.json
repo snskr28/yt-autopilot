@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T20:15:00Z",
+  "title": "Design System: Second Look",
+  "extensions": {
+    "colorMeta": {
+      "cloth": {
+        "role": "neutral",
+        "displayName": "Book Cloth Navy",
+        "canonical": "oklch(24.7% 0.053 263)",
+        "tonalRamp": [
+          "#040a1a",
+          "#17243f",
+          "#33425e",
+          "#516180",
+          "#7283a3",
+          "#94a6c7",
+          "#bccae3",
+          "#eaeff8"
+        ]
+      },
+      "cloth-lift": {
+        "role": "neutral",
+        "displayName": "Cloth Lift",
+        "canonical": "oklch(37.1% 0.076 262.7)",
+        "tonalRamp": [
+          "#020920",
+          "#102349",
+          "#2c416a",
+          "#4a618d",
+          "#6a82b0",
+          "#8ca5d5",
+          "#b6caee",
+          "#e8effc"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Page White",
+        "canonical": "oklch(95.7% 0.006 255.5)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232528",
+          "#404245",
+          "#5f6165",
+          "#808286",
+          "#a2a5a9",
+          "#c7c9cc",
+          "#eeeeef"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Cloth Ink",
+        "canonical": "oklch(77.6% 0.035 261)",
+        "tonalRamp": [
+          "#060b15",
+          "#1b2536",
+          "#384255",
+          "#566275",
+          "#778398",
+          "#99a6bb",
+          "#c0cada",
+          "#ebeff5"
+        ]
+      },
+      "rubric": {
+        "role": "primary",
+        "displayName": "Rubric Red",
+        "canonical": "oklch(60.5% 0.199 30)",
+        "tonalRamp": [
+          "#310000",
+          "#670000",
+          "#8f0000",
+          "#b80800",
+          "#e14130",
+          "#ff6854",
+          "#ffa390",
+          "#ffe3db"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Wordmark",
+        "purpose": "The two-line SECOND / LOOK wordmark only. Archivo 900 at width 125%, uppercase."
+      },
+      "title": {
+        "displayName": "Log Lead",
+        "purpose": "Lead line of the schedule block, page white."
+      },
+      "body": {
+        "displayName": "Plain Sentence",
+        "purpose": "The one sentence under the wordmark; max 30ch, balanced wrap."
+      },
+      "label": {
+        "displayName": "Log Line",
+        "purpose": "Supporting schedule line in cloth ink."
+      },
+      "figure": {
+        "displayName": "Almanac Figure",
+        "purpose": "Tabular day-of-cycle numbers under each moon disc, cloth ink."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "canvases": [
+      {
+        "name": "banner",
+        "value": "2560x1440",
+        "safeArea": "1546x423 at left 507px, top 508px",
+        "purpose": "YouTube channel banner; all readable content inside the safe area."
+      },
+      {
+        "name": "logo",
+        "value": "800x800",
+        "purpose": "YouTube profile picture; cropped to a circle, shown down to about 48px."
+      }
+    ],
+    "fontAsset": {
+      "family": "Archivo",
+      "file": "brand/Archivo-Variable.ttf",
+      "licence": "OFL",
+      "axes": "wght 100-900, wdth 62-125"
+    }
+  },
+  "components": [
+    {
+      "name": "Wordmark",
+      "kind": "custom",
+      "refersTo": "wordmark",
+      "description": "Two-line wordmark in page white, expanded black Archivo.",
+      "html": "<div class=\"ds-ground\"><h1 class=\"ds-wordmark\">Second<br>Look</h1><p class=\"ds-tagline\">Things you've seen a thousand times, explained properly.</p></div>",
+      "css": ".ds-ground { background: #13203a; padding: 32px; } .ds-wordmark { margin: 0; color: #eef1f5; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 48px; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase; } .ds-tagline { margin: 10px 0 0; color: #eef1f5; font-family: Archivo, sans-serif; font-weight: 400; font-size: 20px; line-height: 1.12; letter-spacing: -0.01em; max-width: 30ch; text-wrap: balance; }"
+    },
+    {
+      "name": "Two Looks Mark",
+      "kind": "custom",
+      "refersTo": "reveal",
+      "description": "The logo: two page-white rings (r=170, stroke 40, centres 164px apart) overlap; the lens they share is rubric, under the rings. Symmetric, centred.",
+      "html": "<svg class=\"ds-mark\" width=\"160\" height=\"160\" viewBox=\"0 0 800 800\" role=\"img\" aria-label=\"Second Look mark\"><rect width=\"800\" height=\"800\" fill=\"#13203a\"/><circle cx=\"434\" cy=\"430\" r=\"232\" fill=\"#e0402f\"/><circle cx=\"378\" cy=\"374\" r=\"232\" fill=\"#eef1f5\"/></svg>",
+      "css": ".ds-mark { display: block; border-radius: 50%; }"
+    },
+    {
+      "name": "Almanac Phase Row",
+      "kind": "custom",
+      "refersTo": "moon-disc-lit",
+      "description": "Waxing Moon in steps with tabular day figures; the full Moon at the end is filled rubric.",
+      "html": "<svg class=\"ds-phase-row\" width=\"290\" height=\"68\" viewBox=\"0 0 580 136\" role=\"img\" aria-label=\"Moon phases new to full\"><rect width=\"580\" height=\"136\" fill=\"#13203a\"/><circle cx=\"33\" cy=\"46\" r=\"31\" fill=\"#2a3f68\"/><circle cx=\"201\" cy=\"46\" r=\"31\" fill=\"#2a3f68\"/><path d=\"M 201 15 A 31 31 0 0 1 201 77 A 10.3 31 0 0 0 201 15 Z\" fill=\"#eef1f5\"/><circle cx=\"285\" cy=\"46\" r=\"31\" fill=\"#2a3f68\"/><path d=\"M 285 15 A 31 31 0 0 1 285 77 A 0 31 0 0 1 285 15 Z\" fill=\"#eef1f5\"/><circle cx=\"546\" cy=\"54\" r=\"31\" fill=\"#e0402f\"/><circle cx=\"537\" cy=\"46\" r=\"31\" fill=\"#eef1f5\"/><g fill=\"#aab7cd\" font-family=\"Archivo\" font-size=\"30\" font-weight=\"500\" text-anchor=\"middle\" style=\"font-variant-numeric: tabular-nums\"><text x=\"33\" y=\"123\">0.0</text><text x=\"201\" y=\"123\">5.8</text><text x=\"285\" y=\"123\">7.4</text><text x=\"537\" y=\"123\">14.8</text></g></svg>",
+      "css": ".ds-phase-row { display: block; }"
+    },
+    {
+      "name": "Schedule Block",
+      "kind": "custom",
+      "refersTo": "schedule-lead",
+      "description": "Right-aligned two-line log: lead in page white, rest in cloth ink.",
+      "html": "<div class=\"ds-ground-log\"><p class=\"ds-when\"><b>A Short every day</b><br>Deep dives Tue &amp; Fri</p></div>",
+      "css": ".ds-ground-log { background: #13203a; padding: 24px 32px; } .ds-when { margin: 0; text-align: right; color: #aab7cd; font-family: Archivo, sans-serif; font-weight: 500; font-size: 22px; line-height: 1.12; font-variant-numeric: tabular-nums; } .ds-when b { color: #eef1f5; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Observer's Almanac",
+    "overview": "Second Look is the same sky checked night after night and written down. The world is built from an almanac's own materials: navy book cloth for the ground, page-white ink for everything read, and a single rubric red that marks the second look. Everything is flat colour on a flat ground; discs and tabular figures carry the content, and nothing glows.\n\nThe signature is two looks. In the logo, two page-white rings overlap, and only the lens they share is red; on the banner, the red element is the full Moon that closes the row of phases. Red always marks what the second look reveals, and it is the only red. The mark is symmetric on both axes. The system deliberately refuses the space-channel default of nebula photography, neon type and glowing planets.\n\nDensity is low and calm. Each artifact says one thing in large type, with generous navy around it, and lets one precise figure row do the work of decoration.",
+    "keyCharacteristics": [
+      "Three achromatic-feeling materials (cloth, page, ink-soft) plus one reserved accent (rubric).",
+      "One variable family, Archivo, used at two widths: expanded and black for the wordmark, normal width for everything else.",
+      "Tabular figures everywhere numbers appear.",
+      "Flat fills only: no gradients, no shadows, no glow, no strokes.",
+      "One red reveal per artifact (the lens where the logo's rings overlap; the full Moon ending the phase row) is the one recurring device."
+    ],
+    "rules": [
+      {
+        "name": "The One Red Rule",
+        "body": "Each artifact carries exactly one rubric-red element: what the second look reveals (the logo's lens, the banner's full Moon). Red is never a highlight, a button, an underline, a word, or decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tinted Neutral Rule",
+        "body": "Secondary tones are mixed from the cloth's own blue. Never introduce a neutral grey.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Every number is set with tabular figures (tnum), whether in HTML text or SVG labels.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two Widths Rule",
+        "body": "Expanded width belongs to the wordmark alone. All other text stays at 100% width.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Print Rule",
+        "body": "If it could not be printed with flat inks on book cloth, it does not belong here.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use cloth as the full-bleed ground of every artifact.",
+      "Do use exactly one rubric element per artifact: the reveal (the logo's lens, the banner's full Moon).",
+      "Do use Archivo for all text, expanded and black only for the wordmark.",
+      "Do set every number in tabular figures, and compute figures from real data rather than typing decorative numbers.",
+      "Do separate tones by fill (cloth vs cloth-lift) instead of outlines.",
+      "Do keep everything that must be read inside the platform's safe area."
+    ],
+    "donts": [
+      "Don't use red for text, highlights, underlines, icons or a second accent.",
+      "Don't add gradients, glow, blur, shadows or strokes.",
+      "Don't use nebula or starfield photography, neon type, or glowing planets.",
+      "Don't introduce neutral greys or a second display face."
+    ]
+  }
+}

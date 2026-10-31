@@ -1,7 +1,8 @@
 """Wrapper around Claude Code in headless mode (`claude -p`).
 
-All AI text goes through the Claude Pro login. ANTHROPIC_API_KEY is never set
-and is stripped from the child environment, so nothing is billed as API usage.
+All AI text goes through the Claude Pro login. Every ANTHROPIC_* variable (API
+key, auth token, base URL) is stripped from the child environment, so nothing is
+billed as API usage or routed through a third-party relay.
 """
 import json
 import os
@@ -10,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 from .common import get_logger
@@ -21,6 +23,12 @@ LIMIT_PATTERNS = re.compile(
     r"usage limit|limit reached|rate limit|limit will reset|resets at|out of (extra )?usage",
     re.IGNORECASE,
 )
+# right after the PC wakes, the network can take a minute to come back
+NETWORK_PATTERNS = re.compile(
+    r"ECONNREFUSED|ECONNRESET|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|connection refused|network|socket hang up",
+    re.IGNORECASE,
+)
+NETWORK_RETRIES, NETWORK_WAIT = 3, 30
 
 
 class ClaudeError(RuntimeError):
@@ -31,14 +39,39 @@ class UsageLimitError(ClaudeError):
     """Pro usage window is exhausted; the scheduler should simply retry later."""
 
 
+def _clean_env() -> dict:
+    """The child environment without anything that would reroute or rebill claude -p.
+
+    Any ANTHROPIC_* variable (API key, auth token, base URL) would make Claude Code use an API
+    key or a third-party relay instead of the Claude Pro login saved in ~/.claude; the Claude
+    desktop app's own session variables would tie the call to an app session. Strip them all,
+    so `claude -p` always runs on the saved Pro login.
+    """
+    drop = ("ANTHROPIC_", "CLAUDE_CODE_", "CLAUDECODE", "CLAUDE_AGENT_SDK", "CLAUDE_PID", "CLAUDE_PREVIEW")
+    return {k: v for k, v in os.environ.items() if not k.upper().startswith(drop)}
+
+
 def _run(prompt: str) -> str:
+    """One claude -p call, retrying transient network failures (e.g. just after wake)."""
+    for attempt in range(NETWORK_RETRIES + 1):
+        try:
+            return _run_once(prompt)
+        except ClaudeError as e:
+            if isinstance(e, UsageLimitError) or not NETWORK_PATTERNS.search(str(e)) \
+                    or attempt == NETWORK_RETRIES:
+                raise
+            log.warning("claude -p network error (%s); retrying in %ds", str(e)[:120], NETWORK_WAIT)
+            time.sleep(NETWORK_WAIT)
+
+
+def _run_once(prompt: str) -> str:
     # Task Scheduler may start us with a thinner PATH; fall back to the default install location
     exe = shutil.which("claude") or next(
         (str(p) for p in (Path.home() / ".local" / "bin" / "claude.exe", Path.home() / ".local" / "bin" / "claude")
          if p.exists()), None)
     if not exe:
         raise ClaudeError("claude is not on PATH")
-    env = {k: v for k, v in os.environ.items() if k != "ANTHROPIC_API_KEY"}
+    env = _clean_env()
     # Pure text generation: no tools, no MCP servers, no saved session, and a
     # neutral working directory so no project CLAUDE.md is pulled in.
     cmd = [exe, "-p", "--output-format", "json", "--tools", "",

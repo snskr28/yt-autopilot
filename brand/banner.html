@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Second Look banner</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  body {
+    width: 2560px; height: 1440px; overflow: hidden; position: relative;
+    font-family: "Archivo", sans-serif; color: var(--page);
+  }
+  /* YouTube's safe area: 1546×423, centred. Everything that must be read lives here. */
+  .safe {
+    position: absolute; left: 507px; top: 508px; width: 1546px; height: 423px;
+    display: flex; align-items: center; justify-content: center; gap: 76px;
+  }
+  .mark { display: block; flex: none; }
+  .words { display: flex; flex-direction: column; }
+  h1 {
+    margin: 0; font-weight: 900; font-stretch: 125%;
+    font-size: 106px; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase;
+  }
+  .line {
+    margin: 22px 0 0; font-weight: 400; font-stretch: 100%;
+    font-size: 42px; line-height: 1.15; letter-spacing: -0.01em; max-width: 17em; text-wrap: balance;
+  }
+  .when {
+    margin: 18px 0 0; font-weight: 500; font-stretch: 100%;
+    font-size: 34px; line-height: 1.2; color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+  <div class="safe">
+    <!-- the logo's eye, cropped to the lids -->
+    <svg class="mark" width="400" height="276" viewBox="110 200 580 400" role="img"
+         aria-label="An eye whose iris is a red full moon">
+      <defs>
+        <path id="opening" d="M 186 400 C 280 268, 520 268, 614 400 C 520 532, 280 532, 186 400 Z"/>
+        <mask id="lids" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="800">
+          <rect width="800" height="800" fill="#000"/>
+          <path d="M 118 400 C 230 205, 570 205, 682 400 C 570 595, 230 595, 118 400 Z" fill="#fff"/>
+          <use href="#opening" fill="#000"/>
+        </mask>
+        <clipPath id="in-eye"><use href="#opening"/></clipPath>
+      </defs>
+      <circle cx="400" cy="400" r="112" fill="var(--rubric)" clip-path="url(#in-eye)"/>
+      <rect width="800" height="800" fill="var(--page)" mask="url(#lids)"/>
+    </svg>
+    <div class="words">
+      <h1>Second<br>Look</h1>
+      <p class="line">Things you've seen a thousand times, explained properly.</p>
+      <p class="when">New Short every day · Deep dives Tue &amp; Fri</p>
+    </div>
+  </div>
+</body>
+</html>

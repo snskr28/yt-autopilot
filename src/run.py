@@ -1,8 +1,10 @@
 """Orchestrator.
 
-  python -m src.run generate --type short|long
+  python -m src.run generate --type short|long [--ensure]
       Picks an idea, writes script.json into a new job folder and marks it
       awaiting_review. The owner reviews it and creates an empty APPROVED file.
+      --ensure writes one only when the next free slot is due tomorrow, so the
+      scheduler can run it at every logon without queuing extra scripts.
   python -m src.run produce [--no-upload]
       For every APPROVED job not yet uploaded (earliest publish date first):
       voice -> chapters (long) -> captions -> visuals -> assemble -> thumbnail
@@ -62,11 +64,20 @@ def run_lock():
 
 # ---------- generate ----------
 
-def generate(video_type: str) -> int:
+ENSURE_LEAD_DAYS = 1  # scripts are written the day before their slot
+
+
+def generate(video_type: str, ensure: bool = False) -> int:
+    """Write the next script. With ensure, only when the next free slot is due within
+    ENSURE_LEAD_DAYS, so it is safe to run at every logon and several times a day:
+    missed scheduled runs catch up and no run ever queues extra scripts."""
     try:
         publish_date = next_slot(video_type)
     except PaceError as e:
         log.info("Not generating: %s", e)
+        return 0
+    if ensure and (publish_date - now().date()).days > ENSURE_LEAD_DAYS:
+        log.info("Ensure %s: next free slot is %s, nothing due yet", video_type, publish_date)
         return 0
     try:
         idea = ideas.pick(video_type, publish_date)
@@ -228,6 +239,8 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     gen = sub.add_parser("generate", help="write the next script for review")
     gen.add_argument("--type", choices=["short", "long"], required=True)
+    gen.add_argument("--ensure", action="store_true",
+                     help="only write a script if the next slot (due tomorrow) has none; safe to run often")
     prod = sub.add_parser("produce", help="produce and upload every approved job")
     prod.add_argument("--no-upload", action="store_true", help="stop before uploading (testing)")
     sub.add_parser("stats", help="write the weekly summary")
@@ -236,7 +249,7 @@ def main() -> int:
         with run_lock():
             log.info("=== run %s ===", " ".join(sys.argv[1:]))
             if args.command == "generate":
-                return generate(args.type)
+                return generate(args.type, ensure=args.ensure)
             if args.command == "produce":
                 return produce(upload_enabled=not args.no_upload)
             if args.command == "stats":

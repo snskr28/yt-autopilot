@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Second Look logo</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  body { width: 800px; height: 800px; overflow: hidden; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<!-- 800×800 square; YouTube crops it to a circle. Symmetric on both axes.
+     An eye whose lids taper like two crescents; its iris is the full Moon, the one red element. -->
+<svg width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Second Look: an eye whose iris is a red full moon">
+  <defs>
+    <!-- the opening between the lids -->
+    <path id="opening" d="M 186 400 C 280 268, 520 268, 614 400 C 520 532, 280 532, 186 400 Z"/>
+    <mask id="lids">
+      <rect width="800" height="800" fill="#000"/>
+      <path d="M 118 400 C 230 205, 570 205, 682 400 C 570 595, 230 595, 118 400 Z" fill="#fff"/>
+      <use href="#opening" fill="#000"/>
+    </mask>
+    <!-- the iris tucks under both lids, as a real one does -->
+    <clipPath id="in-eye"><use href="#opening"/></clipPath>
+  </defs>
+  <rect width="800" height="800" fill="var(--cloth)"/>
+  <circle cx="400" cy="400" r="112" fill="var(--rubric)" clip-path="url(#in-eye)"/>
+  <rect width="800" height="800" fill="var(--page)" mask="url(#lids)"/>
+</svg>
+</body>
+</html>
