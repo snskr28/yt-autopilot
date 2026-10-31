@@ -1,7 +1,9 @@
 """Stock visuals from free sources.
 
-Order per query: Pexels videos* -> Wikimedia Commons videos -> Pexels photos*
--> NASA images -> Commons photos -> Pixabay videos*   (* only if the key is in .env)
+Candidates per query, interleaved so Claude sees every source:
+  videos: Pexels* + Pixabay* + Wikimedia Commons
+  photos: Pexels* + Pixabay* + NASA + Commons        (* only if the key is in .env)
+Pixabay is strong on people and everyday scenes; Commons and NASA on science and space.
 
 Commons and NASA need no key. Commons files are used only under public domain,
 CC0 or CC BY (no NC/ND/SA) and with no extra restrictions; every source's
@@ -26,6 +28,7 @@ import os
 import re
 import subprocess
 import time
+from itertools import zip_longest
 from pathlib import Path
 
 import requests
@@ -155,22 +158,63 @@ def pexels_photos(query: str, orientation: str) -> list[dict]:
             for p in (data or {}).get("photos", [])]
 
 
-def pixabay_videos(query: str) -> list[dict]:
+def _pixabay(path: str, params: dict) -> dict | None:
     key = os.environ.get("PIXABAY_API_KEY")
     if not key:
-        return []
-    r = HTTP.get("https://pixabay.com/api/videos/", timeout=TIMEOUT,
-                     params={"key": key, "q": query, "per_page": 15, "safesearch": "true"})
+        return None
+    r = HTTP.get(f"https://pixabay.com/api/{path}", timeout=TIMEOUT,
+                 params={"key": key, "safesearch": "true", "per_page": 15, **params})
     r.raise_for_status()
+    return r.json()
+
+
+def _pixabay_author(hit: dict) -> dict:
+    return {"author": hit["user"], "license": "Pixabay Content License",
+            "author_url": f"https://pixabay.com/users/{hit['user']}-{hit['user_id']}/",
+            "page_url": hit["pageURL"]}
+
+
+def pixabay_videos(query: str, w: int, h: int) -> list[dict]:
+    """Strong on people, hands, eyes and everyday scenes, where the free archives are thin.
+    AI-generated clips are skipped; the smallest rendition that covers the frame is used."""
+    data = _pixabay("videos/", {"q": query})
     out = []
-    for v in r.json().get("hits", []):
-        f = v["videos"].get("large") or v["videos"].get("medium")
-        if f and f.get("url"):
-            out.append({"kind": "video", "source": "pixabay", "id": f"pixabay-video-{v['id']}",
-                        "url": f["url"], "duration": v.get("duration", 0), "author": v["user"],
-                        "license": "Pixabay Content License", "about": v.get("tags", ""),
-                        "author_url": f"https://pixabay.com/users/{v['user']}-{v['user_id']}/",
-                        "page_url": v["pageURL"]})
+    for v in (data or {}).get("hits", []):
+        if v.get("isAiGenerated"):
+            continue
+        files = [f for f in v.get("videos", {}).values() if f.get("url") and f.get("height")]
+        covering = [f for f in files if min(f["width"], f["height"]) >= min(w, h) * 0.95]
+        best = (min(covering, key=lambda f: f["width"] * f["height"]) if covering
+                else max(files, key=lambda f: f["width"] * f["height"], default=None))
+        if not best or min(best["width"], best["height"]) < MIN_VIDEO_HEIGHT:
+            continue
+        out.append({"kind": "video", "source": "pixabay", "id": f"pixabay-video-{v['id']}",
+                    "url": best["url"], "duration": v.get("duration", 0),
+                    "about": f"Pixabay video. Tags: {v.get('tags', '')}", **_pixabay_author(v)})
+    return out
+
+
+def pixabay_photos(query: str, orientation: str) -> list[dict]:
+    data = _pixabay("", {"q": query, "image_type": "photo",
+                         "orientation": "vertical" if orientation == "portrait" else "horizontal"})
+    out = []
+    for p in (data or {}).get("hits", []):
+        if p.get("isAiGenerated") or p.get("isLowQuality") or min(p["imageWidth"], p["imageHeight"]) < MIN_PHOTO_SIDE:
+            continue
+        out.append({"kind": "photo", "source": "pixabay", "id": f"pixabay-photo-{p['id']}",
+                    "url": p["largeImageURL"], "duration": None,
+                    "about": f"Pixabay photo. Tags: {p.get('tags', '')}", **_pixabay_author(p)})
+    return out
+
+
+def _interleave(*lists: list[dict]) -> list[dict]:
+    """Alternate sources so the candidate cut-off never drops a whole source."""
+    out, seen = [], set()
+    for group in zip_longest(*lists):
+        for item in group:
+            if item and item["id"] not in seen:
+                seen.add(item["id"])
+                out.append(item)
     return out
 
 
@@ -287,21 +331,29 @@ def _queries(query: str) -> list[str]:
     return [" ".join(words[:n]) for n in range(len(words), 0, -1)]
 
 
-def find_photos(query: str, orientation: str) -> list[dict]:
+def _per_source(query: str, search, keep=lambda item: True) -> list[dict]:
+    """One source's results for the fullest wording of the query that finds anything.
+    Each source shortens the query on its own: a loose keyword search (Pixabay) always
+    matches the full wording, a strict one (Commons, NASA) often only a shorter one."""
     for q in _queries(query):
-        photos = pexels_photos(q, orientation) + nasa_photos(q) + commons_photos(q)
-        if photos:
-            return photos
+        found = [item for item in search(q) if keep(item)]
+        if found:
+            return found
     return []
 
 
+def find_photos(query: str, orientation: str) -> list[dict]:
+    return _interleave(_per_source(query, lambda q: pexels_photos(q, orientation)),
+                       _per_source(query, lambda q: pixabay_photos(q, orientation)),
+                       _per_source(query, nasa_photos),
+                       _per_source(query, commons_photos))
+
+
 def find_videos(query: str, orientation: str, need: float, w: int, h: int) -> list[dict]:
-    for q in _queries(query):
-        videos = [v for v in pexels_videos(q, orientation, w, h) + commons_videos(q, w, h)
-                  if v["duration"] >= need]
-        if videos:
-            return videos
-    return [v for v in pixabay_videos(query) if v["duration"] >= need]
+    long_enough = lambda v: v["duration"] >= need  # noqa: E731
+    return _interleave(_per_source(query, lambda q: pexels_videos(q, orientation, w, h), long_enough),
+                       _per_source(query, lambda q: pixabay_videos(q, w, h), long_enough),
+                       _per_source(query, lambda q: commons_videos(q, w, h), long_enough))
 
 
 def claude_picks(scenes: list[dict]) -> dict[int, list[str]] | None:
