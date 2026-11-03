@@ -25,9 +25,9 @@
     "subtopic": "octopus",
     "title_angle": "Why an octopus has three hearts and blue blood",
     "why_interesting": "Two hearts pump blood through the gills and one pumps it to the body. The blood is blue because it carries oxygen with copper-based hemocyanin instead of iron-based hemoglobin.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-02_short_why-an-octopus-has-three-hearts-and-blue"
   },
   {
     "id": 4,
@@ -35,9 +35,9 @@
     "subtopic": "banana",
     "title_angle": "Bananas are naturally (and harmlessly) radioactive",
     "why_interesting": "Bananas contain potassium, and a tiny fraction of natural potassium is radioactive potassium-40. The dose is far too small to matter, which makes it a calm way to explain that radioactivity is a normal part of the world.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-03_short_bananas-are-radioactive-and-that-s-total"
   },
   {
     "id": 5,
@@ -45,9 +45,9 @@
     "subtopic": "stomach lining",
     "title_angle": "The cells lining your stomach are replaced every few days",
     "why_interesting": "The surface cells of the stomach lining live in a harsh, acidic environment and are renewed within days. This shows how the body constantly rebuilds itself.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-04_short_why-your-stomach-doesn-t-digest-itself"
   },
   {
     "id": 6,

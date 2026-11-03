@@ -17,16 +17,16 @@ A human stays in the loop on purpose: nothing is produced until you have read th
 | **Review gate** | **You** | The script waits in `jobs/<job>/` until you create an empty `APPROVED` file |
 | Voice | [Kokoro TTS](https://github.com/hexgrad/kokoro) | Natural narration scene by scene, short pauses between scenes, loudness normalised to −16 LUFS |
 | Captions | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | Word-level timings, grouped into 2–4 word caption chunks |
-| Visuals | Wikimedia Commons, NASA (Pexels/Pixabay optional) | Searches stock video and photos per scene; Claude picks the best matches from their descriptions |
+| Visuals | Wikimedia Commons, NASA, plus Pixabay and Pexels with free keys | Searches stock video and photos per scene; Claude picks the best matches from their descriptions |
 | Edit | MoviePy + FFmpeg | 9:16 or 16:9 timeline, animated captions, key-fact cards, music ducked ~20 dB under the voice |
 | Thumbnail | Pillow | Long videos: most striking frame + 3–5 word headline, 1280×720 |
 | Upload | YouTube Data API v3 | Uploaded as private, scheduled for the publish slot, with source credits and AI-use disclosure |
-| Schedule | Windows Task Scheduler | Generates scripts in the morning, produces and uploads twice a day, writes a weekly summary |
+| Schedule | Background watcher + Windows Task Scheduler | Checks every 5 minutes: writes the script due tomorrow, then makes and uploads whatever you approved. Writes a weekly summary |
 
 ## How it works
 
 ```
-                 generate (09:00)                          produce (14:00, 21:00)
+                 generate (when due)                       produce (once approved)
  ideas.json ──► script.json ──► [ you review ] ──► APPROVED ──► voice ─► captions ─► visuals ─► assemble ─► thumbnail ─► upload
    (backlog)    + status.json      edit freely,                 Kokoro   Whisper    Commons/   MoviePy     (long only)  private +
                 in jobs/<job>/     or delete the                                    NASA +                              scheduled
@@ -35,14 +35,15 @@ A human stays in the loop on purpose: nothing is produced until you have read th
 
 * **Two commands, split by the review gate.** `generate` writes a script into a new job folder. `produce` takes every approved job and runs the remaining steps. Each step skips work it has already done, so a run that fails or is interrupted picks up where it stopped.
 * **Publish slots.** Every job gets a date: Shorts one per day, long videos on Tuesday and Friday, all at 18:00 IST by default. Uploads are private with `publishAt` set to that slot.
-* **Failure isolation.** If a step fails, that job is marked `failed` with the step and error, the run moves on to the next job, and the job is retried on later runs (up to 3 attempts). Hitting the Claude Pro usage limit pauses the run cleanly instead of counting as a failure.
-* **One run at a time.** An OS-level lock file means two scheduled runs never overlap.
+* **Failure isolation.** If a step fails, that job is marked `failed` with the step and error, the run moves on to the next job, and the job is retried 30 minutes later (up to 3 attempts). Hitting the Claude Pro usage limit pauses the run cleanly instead of counting as a failure.
+* **Safe to run often.** `tick` does `generate --ensure` for both video types, then `produce`. `--ensure` writes a script only when tomorrow's slot is empty, and a failed script waits an hour before trying again, so frequent checks cost nothing when there's nothing to do.
+* **One run at a time.** An OS-level lock file means two runs never overlap.
 
 ### Choosing visuals
 
 Free stock archives rarely match a sentence exactly, so visuals go through several stages:
 
-1. For each scene, search for a few videos and photos (Commons, NASA, plus Pexels/Pixabay if you add keys). Only public domain, CC0 and CC BY files are kept.
+1. For each scene, search for a few videos and photos, mixing every source: Commons and NASA, plus Pixabay and Pexels if you add keys. From Commons, only public domain, CC0 and CC BY files are kept. Items Pixabay flags as AI-generated or low quality are skipped.
 2. One `claude -p` call per 8 scenes picks the candidates that actually fit the narration, judging from titles, descriptions and categories. It rejects text overlays, logos, news footage and keyword-only matches.
 3. For scenes still short of approved clips, Claude suggests different searches and picks again.
 4. Any slot still empty becomes a generated **motion card** (a drifting gradient with the scene's key phrase). Unapproved footage is never used.
@@ -84,7 +85,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-> **Never set `ANTHROPIC_API_KEY`.** With it set, Claude Code bills API credits instead of using your Pro plan. The pipeline also strips it from the environment it gives `claude -p`.
+> **Never set `ANTHROPIC_API_KEY`.** With it set, Claude Code bills API credits instead of using your Pro plan. The pipeline strips every `ANTHROPIC_*` variable (key, auth token, base URL) from the environment it gives `claude -p`, so it always uses your saved Pro login.
 
 ### 2. Configure
 
@@ -94,7 +95,7 @@ Copy `.env.example` to `.env` and fill in:
 |---|---|---|
 | `CONTACT_EMAIL` | **yes** | Wikimedia's User-Agent policy requires contact details; without it, Commons downloads are rate-limited |
 | `PEXELS_API_KEY` | optional | Much better footage of people and everyday scenes |
-| `PIXABAY_API_KEY` | optional | Extra fallback for video |
+| `PIXABAY_API_KEY` | optional, recommended | Videos and photos of people and everyday scenes; the key is free and instant |
 
 Then edit [`config.yaml`](config.yaml): niche, voice, publish times, time zone and the pace and variety limits.
 
@@ -132,19 +133,18 @@ powershell -ExecutionPolicy Bypass -File scripts\install_schedule.ps1
 
 | Task | When | Runs |
 |---|---|---|
-| generate-short | daily 09:00 | `generate --type short` |
-| generate-long | Mon + Thu 09:00 | `generate --type long` |
-| produce-1400, produce-2100 | daily 14:00 and 21:00 | `produce` |
+| watcher | stays running from 1 minute after sign-in or wake | `watch`: starts a `tick` every 5 minutes |
+| tick | every 30 minutes, and 3 minutes after sign-in or wake | `tick`: the backup, in case the watcher isn't running |
 | weekly-stats | Sun 20:00 | `stats` |
 
-Tasks run as your user while you are logged in. A run missed because the PC was off starts as soon as it is back on. Remove them all with `install_schedule.ps1 -Remove`.
+Tasks run as your user, hidden, while you are signed in. Nothing runs while the PC is off, asleep or at the sign-in screen; missed work catches up a few minutes after you sign in or wake it. The watcher exists because Task Scheduler's repeating timer alone sometimes skipped runs for no recorded reason. Remove everything with `install_schedule.ps1 -Remove`.
 
 ## Daily use
 
-1. Each morning a new script appears in `jobs/<date>_<type>_<slug>/script.json`.
+1. Each day a script for tomorrow appears in `jobs/<date>_<type>_<slug>/script.json`, within minutes of signing in.
 2. Read it against the review checklist: facts correct, a hook that holds, not a near-copy of a recent video, an honest title.
 3. Edit it if you like (the `narration` fields are what gets spoken), then create an empty `APPROVED` file in that folder. To reject it, delete the folder and the idea goes back to the backlog.
-4. The next `produce` run makes and uploads it as private and scheduled.
+4. Within about 5 minutes the watcher starts making it, then uploads it as private and scheduled. A Short takes about 10 minutes in all; a long video about an hour.
 5. Glance at it in YouTube Studio before its publish time, and confirm **AI use = Yes**.
 6. On Sundays, read `logs/weekly_<year>-W<week>.md`. It lists views, anything that needs you, failed jobs and open slots.
 
@@ -155,6 +155,7 @@ Expect about 1.5–2 hours a week of review.
 ```powershell
 .\.venv\Scripts\python.exe -m src.run generate --type short   # or --type long
 .\.venv\Scripts\python.exe -m src.run produce                  # add --no-upload to stop before uploading
+.\.venv\Scripts\python.exe -m src.run tick                     # one check now: generate if due, then produce
 .\.venv\Scripts\python.exe -m src.run stats
 .\.venv\Scripts\python.exe -m src.ideas                        # list the backlog (--refill, --relabel)
 ```
@@ -191,12 +192,12 @@ yt-autopilot/
 
 ## Known limitations
 
-* **Stock footage for abstract topics.** Wikimedia Commons and NASA are excellent for space, earth, nature and microscopy, but thin on everyday shots of people, hands and eyes. Long videos on such topics end up with more photos and motion cards. A Pexels key fixes most of this.
+* **Stock footage for abstract topics.** Wikimedia Commons and NASA are excellent for space, earth, nature and microscopy, but thin on everyday shots of people, hands and eyes. Without a free Pixabay or Pexels key, long videos on such topics end up with more photos and motion cards.
 * **Coverr is not used.** Coverr's API terms exclude commercial use of the videos, even though its website licence allows it, so the pipeline doesn't call that API.
 * **Openverse is not used.** It was unreliable during development (repeated timeouts).
 * **AI-use flag.** The API accepts `containsSyntheticMedia` but never reports it back, so it has to be confirmed in Studio.
 * **Render time.** Everything runs on CPU: about 4 minutes for a Short and about 40 minutes for a 9-minute video.
-* **Claude Pro limits.** Script generation shares your Pro usage window. A long video uses about 25–30 `claude -p` calls (about 11 for the script, the rest for clip picks); a Short about 2–3. Hitting the limit just postpones work to the next run.
+* **Claude Pro limits.** Script generation shares your Pro usage window. A long video uses about 25–30 `claude -p` calls (about 11 for the script, the rest for clip picks); a Short about 2–3. Hitting the limit just postpones the work.
 
 ## Costs
 

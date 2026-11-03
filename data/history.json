@@ -168,5 +168,80 @@
     "caption_style": "boxed",
     "music": "alex-morgan-optimistic-pleasant-light-music-583266.mp3",
     "uploaded_at": "2026-10-31T10:42:23+05:30"
+  },
+  {
+    "job_id": "2026-11-02_short_why-an-octopus-has-three-hearts-and-blue",
+    "type": "short",
+    "idea_id": 3,
+    "subtopic": "octopus",
+    "title": "Why an Octopus Has Three Hearts and Blue Blood",
+    "publish_date": "2026-11-02",
+    "video_id": "O3KYfurh8Sc",
+    "clip_ids": [
+      "commons-159351367",
+      "commons-165966501",
+      "commons-179380105",
+      "commons-47699315",
+      "commons-65198118",
+      "pixabay-photo-8562474",
+      "pixabay-video-1198",
+      "pixabay-video-304019",
+      "pixabay-video-310715",
+      "pixabay-video-37712"
+    ],
+    "thumb_layout": null,
+    "caption_style": "bold_center",
+    "music": "alex-morgan-light-airy-soft-daylight-578475.mp3",
+    "uploaded_at": "2026-11-01T11:24:09+05:30"
+  },
+  {
+    "job_id": "2026-11-03_short_bananas-are-radioactive-and-that-s-total",
+    "type": "short",
+    "idea_id": 4,
+    "subtopic": "banana",
+    "title": "Bananas Are Radioactive (And That's Totally Fine)",
+    "publish_date": "2026-11-03",
+    "video_id": "cTnkU3MoXg0",
+    "clip_ids": [
+      "commons-167991863",
+      "pixabay-photo-21686",
+      "pixabay-photo-7840213",
+      "pixabay-photo-8719086",
+      "pixabay-video-103205",
+      "pixabay-video-136467",
+      "pixabay-video-143479",
+      "pixabay-video-171044",
+      "pixabay-video-19258",
+      "pixabay-video-78220",
+      "pixabay-video-8281"
+    ],
+    "thumb_layout": null,
+    "caption_style": "karaoke_lower",
+    "music": "leberch-interstellar-589820.mp3",
+    "uploaded_at": "2026-11-02T15:24:05+05:30"
+  },
+  {
+    "job_id": "2026-11-04_short_why-your-stomach-doesn-t-digest-itself",
+    "type": "short",
+    "idea_id": 5,
+    "subtopic": "stomach lining",
+    "title": "Why Your Stomach Doesn't Digest Itself",
+    "publish_date": "2026-11-04",
+    "video_id": "8SgAfPhFg0k",
+    "clip_ids": [
+      "commons-24885264",
+      "pixabay-photo-7249239",
+      "pixabay-photo-7543677",
+      "pixabay-video-11066",
+      "pixabay-video-131701",
+      "pixabay-video-172686",
+      "pixabay-video-4062",
+      "pixabay-video-5456",
+      "pixabay-video-85064"
+    ],
+    "thumb_layout": null,
+    "caption_style": "boxed",
+    "music": "atlasaudio-space-space-music-587610.mp3",
+    "uploaded_at": "2026-11-03T11:08:47+05:30"
   }
 ]

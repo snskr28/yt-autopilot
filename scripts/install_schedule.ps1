@@ -1,10 +1,12 @@
 # Registers the yt-autopilot tasks in Windows Task Scheduler (folder \yt-autopilot\).
 # Runs as the current user, only while logged on (Claude Code and the YouTube token live in this profile).
 #
-#   tick          every 30 minutes, and 3 minutes after sign-in or unlock (waking from sleep):
-#                 writes any script due tomorrow (generate --ensure), then makes and uploads
-#                 whatever is approved (produce). Cheap when nothing is due, so missed times
-#                 simply catch up on the next tick.
+#   watcher       starts 1 minute after sign-in or unlock (waking from sleep) and stays running,
+#                 starting a tick every 5 minutes. Its 30-minute trigger restarts it if it dies;
+#                 while it is running that trigger does nothing.
+#   tick          every 30 minutes, and 3 minutes after sign-in or unlock: the backup. It writes
+#                 any script due tomorrow (generate --ensure), then makes and uploads whatever
+#                 is approved (produce). Cheap when nothing is due, and a lock stops overlaps.
 #   weekly-stats  Sunday 20:00
 #
 # Runs are launched hidden (task-hidden.vbs), so no console window flashes.
@@ -51,10 +53,16 @@ function AtUnlock([string]$delay) {
     $t
 }
 
+# the watcher runs indefinitely, so it gets no execution time limit
+$watcherSettings = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries `
+    -ExecutionTimeLimit (New-TimeSpan -Seconds 0) -MultipleInstances IgnoreNew
+
 $tasks = @(
-    @{ Name = 'tick';         Args = 'tick'
+    @{ Name = 'watcher';      Args = 'watch';  Settings = $watcherSettings
+       Triggers = @((Every30Minutes), (AtLogon 'PT1M'), (AtUnlock 'PT1M')) },
+    @{ Name = 'tick';         Args = 'tick';   Settings = $settings
        Triggers = @((Every30Minutes), (AtLogon 'PT3M'), (AtUnlock 'PT3M')) },
-    @{ Name = 'weekly-stats'; Args = 'stats'
+    @{ Name = 'weekly-stats'; Args = 'stats';  Settings = $settings
        Triggers = @(New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At '20:00') }
 )
 
@@ -67,7 +75,7 @@ foreach ($t in $tasks) {
     $action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument ('"{0}" {1}' -f $launcher, $t.Args) `
         -WorkingDirectory $project
     Register-ScheduledTask -TaskPath $folder -TaskName $t.Name -Action $action -Trigger $t.Triggers `
-        -Settings $settings -Principal $principal -Force | Out-Null
+        -Settings $t.Settings -Principal $principal -Force | Out-Null
     Write-Output ("Registered {0,-13} -> {1}  ({2} triggers)" -f $t.Name, $t.Args, $t.Triggers.Count)
 }
 Get-ScheduledTask -TaskPath $folder | Get-ScheduledTaskInfo |
