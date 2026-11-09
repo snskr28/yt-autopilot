@@ -9,6 +9,7 @@ the altered/synthetic content flag set. Description gets credits for every
 stock source and the music track. Appends the video to data/history.json.
 """
 import argparse
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -19,6 +20,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
+from httplib2 import HttpLib2Error
 
 from . import ideas
 from .common import CONFIG, DATA_DIR, ROOT, TZ, get_logger, now, read_json, write_json
@@ -37,6 +39,7 @@ WRITABLE_STATUS = ("privacyStatus", "publishAt", "selfDeclaredMadeForKids", "emb
 MIN_SCHEDULE_LEAD = timedelta(minutes=30)  # YouTube rejects publishAt too close to now
 DESCRIPTION_LIMIT = 5000
 TAGS_CHAR_LIMIT = 450  # YouTube allows 500 incl. separators; keep a margin
+NETWORK_RETRIES = 8    # resume attempts when the connection drops mid-upload
 
 
 class UploadError(RuntimeError):
@@ -106,6 +109,22 @@ def publish_at(status: dict) -> datetime:
     return local.astimezone(timezone.utc)
 
 
+def set_thumbnail(yt, video_id: str, job_dir: Path) -> bool:
+    """Set the custom thumbnail, a few tries; a failure is logged, never raised."""
+    thumb = next((p for p in (job_dir / "thumb.png", job_dir / "thumb.jpg") if p.exists()), None)
+    if not thumb:
+        return False
+    for attempt in range(1, 5):
+        try:
+            yt.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumb))).execute()
+            return True
+        except (HttpError, OSError, HttpLib2Error) as e:
+            log.warning("Thumbnail for %s failed (%s), try %d/4", video_id, type(e).__name__, attempt)
+            time.sleep(10 * attempt)
+    log.warning("Could not set the thumbnail for %s: upload it in Studio", video_id)
+    return False
+
+
 def upload(job_dir: Path) -> str:
     status = read_json(job_dir / "status.json")
     script = read_json(job_dir / "script.json")
@@ -156,15 +175,22 @@ def upload(job_dir: Path) -> str:
                 log.warning("Upload hiccup (%s); retrying chunk", e.resp.status)
                 continue
             raise
+        except (OSError, HttpLib2Error) as e:  # dropped connection: SSL EOF, reset, timeout, DNS
+            if retries >= NETWORK_RETRIES:
+                raise
+            retries += 1
+            wait = min(10 * 2 ** retries, 120)
+            log.warning("Upload connection dropped (%s); resuming in %ds (%d/%d)",
+                        type(e).__name__, wait, retries, NETWORK_RETRIES)
+            time.sleep(wait)
     video_id = response["id"]
 
-    thumb = next((p for p in (job_dir / "thumb.png", job_dir / "thumb.jpg") if p.exists()), None)
-    if status["type"] == "long" and thumb:
-        yt.thumbnails().set(videoId=video_id, media_body=MediaFileUpload(str(thumb))).execute()
-
-    try:  # the upload already succeeded: never let this step lose the video_id
+    # The video is on YouTube now: nothing below may lose its id, or a retry would upload a duplicate.
+    if status["type"] == "long":
+        set_thumbnail(yt, video_id, job_dir)
+    try:
         confirmed = ensure_metadata(yt, video_id, script)
-    except HttpError as e:
+    except (HttpError, OSError, HttpLib2Error) as e:
         log.warning("Could not confirm AI-use/tags for %s (%s); check them in Studio", video_id, e)
         confirmed = {"disclosure": False, "tags": False}
 

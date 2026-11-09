@@ -19,3 +19,6 @@ assets/music/*
 
 # Design review captures (regenerated on demand)
 .impeccable/review/
+
+# MoviePy's temporary audio while rendering
+*TEMP_MPY*

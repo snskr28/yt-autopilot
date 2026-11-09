@@ -55,9 +55,9 @@
     "subtopic": "Pando aspen grove",
     "title_angle": "This 'forest' in Utah is actually one single tree",
     "why_interesting": "Pando is a grove of tens of thousands of quaking aspen stems that share one root system and identical DNA. It is one of the heaviest known living organisms, at an estimated 6,000 tonnes.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-05_short_this-utah-forest-is-actually-one-single"
   },
   {
     "id": 7,
@@ -65,9 +65,9 @@
     "subtopic": "honey",
     "title_angle": "Why honey can stay edible for thousands of years",
     "why_interesting": "Honey has very little free water, is acidic, and contains small amounts of hydrogen peroxide, so microbes struggle to grow in it. Archaeologists have found honey in ancient Egyptian tombs that had not spoiled.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-06_short_why-honey-can-last-for-thousands-of-year"
   },
   {
     "id": 8,
@@ -75,9 +75,9 @@
     "subtopic": "spinal discs",
     "title_angle": "You're slightly taller in the morning than at night",
     "why_interesting": "During the day, gravity squeezes fluid out of the discs between your vertebrae, and you can lose around a centimetre of height. Lying down overnight lets the discs recover.",
-    "status": "new",
+    "status": "scripted",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-07_short_why-you-re-taller-in-the-morning-than-at"
   },
   {
     "id": 9,
@@ -85,9 +85,9 @@
     "subtopic": "lightning",
     "title_angle": "A lightning bolt is hotter than the surface of the Sun",
     "why_interesting": "A lightning channel can briefly reach about 30,000 °C, roughly five times hotter than the Sun's surface. That sudden heating makes the air expand explosively, and the expanding air is the thunder you hear.",
-    "status": "new",
+    "status": "scripted",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-08_short_lightning-is-five-times-hotter-than-the"
   },
   {
     "id": 10,
@@ -95,9 +95,9 @@
     "subtopic": "Rayleigh scattering",
     "title_angle": "The same physics makes the sky blue and sunsets red",
     "why_interesting": "Air molecules scatter short blue wavelengths much more than red ones, which is called Rayleigh scattering. At sunset, light travels through more atmosphere, so most of the blue is scattered away before it reaches you.",
-    "status": "new",
+    "status": "scripted",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-10_short_why-the-sky-is-blue-but-sunsets-are-red"
   },
   {
     "id": 11,
@@ -155,9 +155,9 @@
     "subtopic": "star",
     "title_angle": "The life of a star, from a cold gas cloud to a black hole",
     "why_interesting": "The video can follow one clear timeline: nebula collapse, ignition of fusion, the main sequence, red giants, and the forks that lead to white dwarfs, supernovae, neutron stars or black holes. It ends with how elements made in stars ended up in us.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-06_long_how-iron-kills-a-giant-star-in-under-a-s"
   },
   {
     "id": 17,
@@ -165,9 +165,9 @@
     "subtopic": "airplane wing",
     "title_angle": "How a 400-tonne airplane actually stays in the air",
     "why_interesting": "Lift is widely misunderstood, so the video can correct the 'equal transit time' myth. Sections could cover pressure and airflow turning, the four forces, wing shape and angle of attack, flaps and control surfaces, and why planes cruise high.",
-    "status": "new",
+    "status": "published",
     "created_at": "2026-10-30T13:27:15+05:30",
-    "job_id": null
+    "job_id": "2026-11-10_long_how-a-400-tonne-airplane-actually-stays"
   },
   {
     "id": 18,
@@ -197,6 +197,206 @@
     "why_interesting": "This explains thermohaline circulation in clear steps: how wind-driven surface currents work, how differences in water density sink water near the poles, how long it takes water to complete the loop, how the circulation affects regional climates, and how scientists track it.",
     "status": "new",
     "created_at": "2026-10-30T13:27:15+05:30",
+    "job_id": null
+  },
+  {
+    "id": 21,
+    "type": "short",
+    "subtopic": "Saturn",
+    "title_angle": "Saturn is less dense than water, so in a big enough bathtub it would float",
+    "why_interesting": "A giant planet 95 times Earth's mass has an average density of about 0.69 g/cm³, lower than water's. The image is memorable and leads into what gas giants are made of.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 22,
+    "type": "short",
+    "subtopic": "koala",
+    "title_angle": "Koalas have fingerprints so similar to ours they could confuse a crime scene",
+    "why_interesting": "Koalas evolved fingerprints independently of primates, and theirs are very hard to tell apart from human prints under a microscope. It's a clear example of convergent evolution.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 23,
+    "type": "short",
+    "subtopic": "sloth",
+    "title_angle": "Sloths move so slowly that algae grows in their fur",
+    "why_interesting": "Sloth fur hosts green algae and even its own moths, so each sloth is a tiny moving ecosystem. The algae may also help with camouflage.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 24,
+    "type": "short",
+    "subtopic": "Moon",
+    "title_angle": "The Moon drifts about 3.8 cm farther from Earth every year",
+    "why_interesting": "Apollo astronauts left mirrors on the Moon, and lasers bounced off them measure this drift precisely. Tidal forces slowly push the Moon away.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 25,
+    "type": "short",
+    "subtopic": "wombat",
+    "title_angle": "Wombats are the only animals known to make cube-shaped poop",
+    "why_interesting": "Researchers found that uneven stiffness in the wombat's intestinal walls shapes the cubes. It's a surprising bit of soft-tissue engineering.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 26,
+    "type": "short",
+    "subtopic": "mantis shrimp",
+    "title_angle": "The mantis shrimp punches so fast the water around its claw briefly boils",
+    "why_interesting": "Its club strikes with the acceleration of a small bullet and creates cavitation bubbles. When the bubbles collapse they release a second shockwave, so every hit lands twice.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 27,
+    "type": "short",
+    "subtopic": "stapes bone",
+    "title_angle": "The smallest bone in your body is inside your ear and is about the size of a grain of rice",
+    "why_interesting": "The stapes is roughly 3 mm long and passes sound vibrations into the inner ear. Without it, hearing as we know it wouldn't work.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 28,
+    "type": "short",
+    "subtopic": "hummingbird",
+    "title_angle": "A hummingbird's heart can beat more than 1,000 times a minute",
+    "why_interesting": "Hovering burns energy at an extreme rate, so the hummingbird's heart and metabolism run faster than almost any other warm-blooded animal's. At night they can drop into a torpor to save energy.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 29,
+    "type": "short",
+    "subtopic": "Mount Chimborazo",
+    "title_angle": "Everest isn't the closest point on Earth to space. This volcano in Ecuador is",
+    "why_interesting": "Earth bulges at the equator, so Chimborazo's summit is about 2 km farther from Earth's center than Everest's. Which mountain is 'highest' depends on how you measure.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 30,
+    "type": "short",
+    "subtopic": "shark",
+    "title_angle": "Sharks are older than trees",
+    "why_interesting": "The earliest sharks appear in the fossil record around 450 million years ago. The first true trees came tens of millions of years later, which puts deep time in perspective.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 31,
+    "type": "short",
+    "subtopic": "Uranus",
+    "title_angle": "Uranus spins on its side, so each pole gets 42 years of daylight and then 42 years of darkness",
+    "why_interesting": "Its axis is tilted about 98 degrees, probably after an ancient giant impact. That tilt produces the strangest seasons in the solar system.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 32,
+    "type": "short",
+    "subtopic": "goosebumps",
+    "title_angle": "Goosebumps are left over from when our ancestors had fur",
+    "why_interesting": "Tiny muscles called arrector pili pull each hair upright. In furry mammals this traps warmth or makes the animal look bigger. In us, it mostly just makes bumps.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 33,
+    "type": "short",
+    "subtopic": "snowflake",
+    "title_angle": "Why every snowflake has six sides",
+    "why_interesting": "Water molecules lock into a hexagonal lattice as they freeze, and that molecular shape scales up into the visible crystal. Temperature and humidity decide which branching pattern grows.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 34,
+    "type": "short",
+    "subtopic": "Olympus Mons",
+    "title_angle": "Mars has a volcano so wide that from its summit the edges are hidden beyond the horizon",
+    "why_interesting": "Olympus Mons is about 22 km tall and roughly the size of France. Its slopes are so gentle and wide that the planet's curvature hides its base from the top.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 35,
+    "type": "long",
+    "subtopic": "Jupiter's Great Red Spot",
+    "title_angle": "The storm bigger than Earth that has raged for centuries, and why it's shrinking",
+    "why_interesting": "Possible sections: first observations, its size and wind speeds, what powers it, why it's red, how it has shrunk in recent decades, and what Juno found beneath it. It mixes history, physics and fresh spacecraft data.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 36,
+    "type": "long",
+    "subtopic": "human liver",
+    "title_angle": "The organ that can regrow itself: inside the liver's 500 jobs",
+    "why_interesting": "Possible sections: what the liver does (filtering, bile, storage, making proteins), how its lobules are built, how it regenerates after losing tissue, the Prometheus myth connection, and why it's unique among organs. Educational only, with no health advice.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 37,
+    "type": "long",
+    "subtopic": "monarch butterfly",
+    "title_angle": "A 4,000 km migration no single butterfly completes",
+    "why_interesting": "Possible sections: the route from Canada to Mexico, the multi-generation relay, the long-lived 'super generation', navigation by a sun compass, the overwintering forests, and how citizen scientists mapped it all. It's an emotional story backed by solid science.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 38,
+    "type": "long",
+    "subtopic": "microwave oven",
+    "title_angle": "How a microwave really heats your food (and the melted chocolate bar that started it)",
+    "why_interesting": "Possible sections: Percy Spencer's accidental discovery, how a magnetron works, how water molecules respond to the oscillating field, why hot and cold spots form, why metal sparks, and myths versus facts. It explains a familiar object people rarely understand.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 39,
+    "type": "long",
+    "subtopic": "ocean tides",
+    "title_angle": "Why the ocean rises and falls twice a day, and why the Moon isn't the whole story",
+    "why_interesting": "Possible sections: the Moon's pull, why there are two bulges, the Sun's role in spring and neap tides, how coastline shape creates the extreme tides of the Bay of Fundy, places with almost no tide, and tides slowing Earth's spin. Many people misunderstand tides, so the explainer pays off.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
+    "job_id": null
+  },
+  {
+    "id": 40,
+    "type": "long",
+    "subtopic": "human heart",
+    "title_angle": "The spark that starts every heartbeat: your heart's built-in electrical system",
+    "why_interesting": "Possible sections: the sinoatrial node as a natural pacemaker, how the electrical signal travels, why the heart can beat even outside the body, what an ECG line actually shows, the lifetime beat count, and how the four chambers stay in sync. Purely educational, with no medical advice.",
+    "status": "new",
+    "created_at": "2026-11-09T02:28:47+05:30",
     "job_id": null
   }
 ]
